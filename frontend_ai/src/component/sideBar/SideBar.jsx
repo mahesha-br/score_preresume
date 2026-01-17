@@ -4,11 +4,25 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/AuthContext";
 
 const SideBar = () => {
     const location=useLocation();
+    const navigate =useNavigate();
     console.log(location);
+
+    const {userInfo,isLogin,setLogin,setUserInfo}=useContext(AuthContext);
+
+    const handleLogout=()=>{
+      localStorage.clear();
+      setLogin(false);
+      setUserInfo(null);
+      navigate('/')
+
+    }
+    
      
 
   return (
@@ -37,14 +51,17 @@ const SideBar = () => {
           <span>History</span>
         </Link>
 
-        <Link to={'/admin'} className={`p-5 flex font-serif items-center gap-2.5 text-[22px] cursor-pointer hover:bg-white/10
+        {
+          userInfo?.role==='admin' && <Link to={'/admin'} className={`p-5 flex font-serif items-center gap-2.5 text-[22px] cursor-pointer hover:bg-white/10
   ${location.pathname === "/admin" ? "bg-[rgb(72,72,222)]" : ""}
        `}>
           <AdminPanelSettingsIcon sx={{ fontSize: 25,}} />
           <span>Admin</span>
         </Link>
+        }
 
-        <div className="p-5 flex font-serif items-center gap-2.5 text-[22px] cursor-pointer hover:bg-white/10">
+        <div onClick={handleLogout}
+        className="p-5 flex font-serif items-center gap-2.5 text-[22px] cursor-pointer hover:bg-white/10">
           <LogoutIcon sx={{ fontSize: 25,}} />
           <span>Logout</span>
         </div>
