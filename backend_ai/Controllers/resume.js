@@ -73,7 +73,10 @@ exports.addResume = async (req, res) => {
 
 exports.getAllResumesForUser = async (req, res) => {
     try {
-        {/* Please watch the video for ful source code */ }
+        const {user}=req.params;
+        let resumes=await ResumeModel.find({user:user}).sort({createdAt:-1});
+        return res.status(200).json({message:"Your Previous History",resume:resumes});
+
 
 
     } catch (err) {
@@ -84,7 +87,8 @@ exports.getAllResumesForUser = async (req, res) => {
 
 exports.getResumeForAdmin = async (req, res) => {
     try {
-        {/* Please watch the video for ful source code */ }
+        let resumes=await ResumeModel.find({}).sort({createdAt:-1});
+        return res.status(200).json({message:"Fetched All History",resume:resumes});
 
    } catch (err) {
         console.error(err);
