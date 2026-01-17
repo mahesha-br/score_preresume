@@ -5,6 +5,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, Provider } from "../../utils/firebase";
 import { AuthContext } from "../../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from '../../utils/axios'
 
 const Login = () => {
   const { setLogin, setUserInfo } = useContext(AuthContext);
@@ -29,13 +30,19 @@ const Login = () => {
         photoUrl: user.photoURL,
       };
 
+      await axios.post('/api/user',userData).then((response)=>{
+        setUserInfo(response.data.user)
+        localStorage.setItem("userInfo", JSON.stringify(response.data.user));
+      }).catch(error=>{
+        console.log(error)
+      })
+
       // ✅ Update context
       setLogin(true);
-      setUserInfo(userData);
 
       // ✅ Persist login
       localStorage.setItem("isLogin", "true");
-      localStorage.setItem("userInfo", JSON.stringify(userData));
+      
 
       // ✅ Navigate after login
       navigate("/dashboard");
