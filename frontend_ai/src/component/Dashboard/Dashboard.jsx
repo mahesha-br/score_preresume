@@ -45,9 +45,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen p-5 lg:p-12.5 gap-7.5 bg-[whitesmoke] box-border">
-      {/* Main Card */}
-      <div className="w-full lg:w-[70%] bg-[#f4f6fa] rounded-[20px] shadow-[0_10px_20px_rgba(0,0,0,0.2)] p-5 lg:p-7.5 flex flex-col box-border">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full p-5 lg:p-12 gap-7 bg-[whitesmoke] box-border">
+      
+      {/* ================= LEFT PANEL ================= */}
+      <div className="w-full lg:w-[70%] bg-[#f4f6fa] rounded-[20px]
+        shadow-[0_10px_20px_rgba(0,0,0,0.2)]
+        p-5 lg:p-8 flex flex-col">
+
         <div className="text-[26px] font-semibold">
           Smart Resume Screening
         </div>
@@ -57,7 +61,10 @@ const Dashboard = () => {
         </div>
 
         {/* Instructions */}
-        <div className="w-full bg-white rounded-[30px] shadow-[0_4px_6px_rgba(0,0,0,0.1)] px-5 py-3.75 my-5 text-[16px]">
+        <div className="w-full bg-white rounded-[30px]
+          shadow-[0_4px_6px_rgba(0,0,0,0.1)]
+          px-5 py-4 my-5 text-[16px]">
+
           <div className="flex items-center gap-2 font-semibold">
             <span>🔔</span>
             <span>Important Instruction:</span>
@@ -67,8 +74,7 @@ const Dashboard = () => {
             <span>📋</span>
             <span>
               Please paste the complete job description in the
-              <strong> "Job description" </strong>
-              field before submitting.
+              <strong> "Job description"</strong> field.
             </span>
           </div>
 
@@ -80,28 +86,27 @@ const Dashboard = () => {
 
         {/* Upload Row */}
         <div className="flex flex-col lg:flex-row justify-between gap-5 mt-5">
-          <div className="w-full lg:w-[60%] bg-white rounded-[30px] px-5 py-3.75 shadow-[0_4px_6px_rgba(0,0,0,0.1)] text-[22px]">
+          <div className="w-full lg:w-[60%] bg-white rounded-[30px]
+            px-5 py-4 shadow-[0_4px_6px_rgba(0,0,0,0.1)]
+            text-[22px] truncate">
             {uploadFiletext}
           </div>
 
-          <div className="flex items-center">
-            <label
-              htmlFor="inputField"
-              className="text-[18px] cursor-pointer px-10 py-5 text-white font-bold
+          <label
+            htmlFor="inputField"
+            className="text-[18px] cursor-pointer px-10 py-5 text-white font-bold
               bg-linear-to-r from-[#fca326] to-[#f94a6b]
-              rounded-[30px] border-[3px] border-black"
-            >
-              Upload Resume
-            </label>
+              rounded-[30px] border-[3px] border-black text-center">
+            Upload Resume
+          </label>
 
-            <input
-              type="file"
-              accept=".pdf"
-              id="inputField"
-              className="hidden"
-              onChange={handleOnChangeFile}
-            />
-          </div>
+          <input
+            type="file"
+            accept=".pdf"
+            id="inputField"
+            className="hidden"
+            onChange={handleOnChangeFile}
+          />
         </div>
 
         {/* Textarea + Analyze */}
@@ -111,31 +116,34 @@ const Dashboard = () => {
             onChange={(e) => setJobDesc(e.target.value)}
             placeholder="Paste Your Job Description"
             className="outline-none rounded-[20px] border-2 border-[rgb(14,14,97)]
-            px-5 py-2.5 box-border w-full lg:w-[65%] resize-none"
+              px-5 py-3 w-full lg:w-[65%] resize-none"
             rows={10}
           />
 
           <div
             onClick={handleUpload}
-            className="w-37.5 h-37.5 border-[3px] border-black flex justify-center items-center
-            rounded-full bg-linear-to-r from-[#fca326] to-[#f94a6b]
-            text-[22px] text-white cursor-pointer mt-4 lg:mt-10"
-          >
+            className="w-37.5 h-37.5 border-[3px] border-black
+              flex justify-center items-center rounded-full
+              bg-linear-to-r from-[#fca326] to-[#f94a6b]
+              text-[22px] text-white cursor-pointer mt-4 lg:mt-10">
             Analyze
           </div>
         </div>
       </div>
 
-      {/* Side Card */}
-      <div className="w-full lg:w-[25%] flex flex-col gap-5">
-        {/* Top Card */}
-        <div className="rounded-[20px] p-5 flex flex-col items-center justify-center shadow-[0_10px_20px_rgba(0,0,0,0.2)]">
+      {/* ================= RIGHT PANEL ================= */}
+      <div className="w-full lg:w-[25%] flex flex-col gap-5 min-h-full">
+
+        {/* Profile Card */}
+        <div className="rounded-[20px] p-5 flex flex-col items-center
+          shadow-[0_10px_20px_rgba(0,0,0,0.2)] bg-white">
+
           <div className="text-[22px] font-bold text-center">
             Analyze with AI
           </div>
 
           <img
-            className="w-21.25 h-21.25 rounded-full my-5 object-cover"
+            className="w-20 h-20 rounded-full my-5 object-cover"
             src={
               userInfo?.photoUrl
                 ? userInfo.photoUrl
@@ -149,38 +157,59 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Bottom Card */}
-        {result && (
-          <div className="rounded-[20px] p-5 flex flex-col items-center justify-start shadow-[0_10px_20px_rgba(0,0,0,0.2)]
-          mt-4 lg:mt-10 overflow-auto max-h-100 w-full">
-            <div className="text-[22px] font-bold mb-2 text-center">
-              Result
-            </div>
+        {/* Placeholder BEFORE upload */}
+        {!result && !loading && (
+          <div className="rounded-[20px] p-5 flex flex-col items-center justify-center
+            shadow-[0_10px_20px_rgba(0,0,0,0.2)]
+            min-h-75 bg-white text-center text-gray-400">
 
-            <div className="flex justify-center items-center gap-5 mb-4">
-              <div className="text-[22px] font-bold">
-                {result?.score}%
-              </div>
-              <CreditScoreIcon className="text-[22px]" />
+            <div className="text-[18px] font-semibold">
+              No analysis yet
             </div>
-
-            <div className="w-full">
-              <div className="text-[22px] font-bold mb-2">
-                Feedback
-              </div>
-              <div className="text-sm sm:text-[16px] leading-relaxed">
-                {result?.feedback}
-              </div>
+            <div className="text-sm mt-2">
+              Upload resume & job description
             </div>
           </div>
         )}
 
+        {/* Result */}
+        {result && (
+  <div
+    className="rounded-[20px] p-5 flex flex-col items-center
+    shadow-[0_10px_20px_rgba(0,0,0,0.2)]
+    min-h-75 max-h-105
+    bg-white overflow-hidden"
+  >
+    <div className="text-[22px] font-bold mb-2 text-center">
+      Result
+    </div>
+
+    <div className="flex items-center gap-3 mb-4">
+      <div className="text-[26px] font-bold">
+        {result.score}%
+      </div>
+      <CreditScoreIcon />
+    </div>
+
+    {/* SCROLLABLE CONTENT */}
+    <div className="w-full overflow-y-auto pr-2">
+      <div className="text-[20px] font-bold mb-2">
+        Feedback
+      </div>
+      <div className="text-[15px] leading-relaxed">
+        {result.feedback}
+      </div>
+    </div>
+  </div>
+)}
+
+        {/* Loading */}
         {loading && (
           <Skeleton
             variant="rectangular"
             sx={{ borderRadius: "20px" }}
-            width={280}
-            height={280}
+            width="100%"
+            height={300}
           />
         )}
       </div>
