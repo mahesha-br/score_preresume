@@ -4,10 +4,12 @@ const port = 4000
 
 require('./connection');
 
-app.get('/', (req, res) => {
-  res.send('Hello World i am mahesha!')
-})
+app.use(express.json());
 
+const UserRoutes=require('./Routes/user');
+
+
+app.use('/api/user',UserRoutes)
 
 
 app.listen(port, () => {
