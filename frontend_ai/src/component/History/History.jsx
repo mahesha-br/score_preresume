@@ -18,7 +18,7 @@ const History = () => {
       setLoader(true);
       try {
         const results = await axios.get(`/api/resume/get/${userInfo?._id}`);
-        console.log(results.data.resume);
+        console.log(results.data.resumes);
         setData(results.data.resume);
       } catch (error) {
         console.log(error);
