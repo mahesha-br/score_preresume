@@ -7,7 +7,13 @@ exports.register = async (req, res) => {
         const userExist = await UserModel.findOne({ email });
 
         if (!userExist) {
-            let newUser = new UserModel({ name, email, photoUrl });
+            const newUser = new UserModel({
+                name,
+                email,
+                photoUrl,
+                role: "user"   // ✅ FIX
+            });
+
             await newUser.save();
 
             return res.status(200).json({
@@ -22,9 +28,9 @@ exports.register = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({
-            error: 'server error',
+            error: 'Server error',
             message: error.message
         });
     }
