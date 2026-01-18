@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-mongoose.connect('mongodb+srv://maheshabr2004_db_user:8xRDgyVfJGzGHi9L@cluster0.ltpqx1u.mongodb.net/?appName=Cluster0')
+mongoose.connect(process.env.MONGO_URI)
 .then((res)=>{
     console.log("Database is connected successfully ")
 }).catch(error=>{
@@ -9,8 +9,3 @@ mongoose.connect('mongodb+srv://maheshabr2004_db_user:8xRDgyVfJGzGHi9L@cluster0.
 
 
 
-
-// 8xRDgyVfJGzGHi9L
-// maheshabr2004_db_user
-
-// mongodb+srv://maheshabr2004_db_user:8xRDgyVfJGzGHi9L@cluster0.ltpqx1u.mongodb.net/?appName=Cluster0
