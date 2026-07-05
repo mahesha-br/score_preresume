@@ -1,0 +1,41 @@
+.footer-container {
+    /* background-color handled by Tailwind bg-gray-700 */
+    padding: 20px 0;
+    margin-top: auto;
+    /* border-top: 1px solid #e9ecef;  Removed or adjust for dark theme */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    /* color handled by Tailwind text-white */
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-link {
+    /* color handled by Tailwind */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}

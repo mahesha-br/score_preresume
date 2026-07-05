@@ -20,9 +20,14 @@ const Dashboard = () => {
   };
 
   const handleUpload = async () => {
+    console.log("Analyze button clicked");
     setResult(null);
 
+    console.log("Job Desc:", jobDesc);
+    console.log("Resume File:", resumeFile);
+
     if (!jobDesc || !resumeFile) {
+      console.log("Missing job description or resume file");
       alert("Please fill Job Description & Upload Resume");
       return;
     }
@@ -33,20 +38,31 @@ const Dashboard = () => {
     formData.append("user", userInfo._id);
 
     setLoading(true);
+    console.log("Sending request to backend...");
 
     try {
       const response = await API.post("/api/resume/addResume", formData);
-      setResult(response.data.data);
+      console.log("Response received:", response);
+      if (response.data && response.data.data) {
+        console.log("Result data:", response.data.data);
+        setResult(response.data.data);
+      } else {
+        console.log("Response data missing or invalid format", response.data);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error analyzing resume:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.status, error.response.data);
+      }
     } finally {
       setLoading(false);
+      console.log("Loading set to false");
     }
   };
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen w-full p-5 lg:p-12 gap-7 bg-[whitesmoke] box-border">
-      
+
       {/* ================= LEFT PANEL ================= */}
       <div className="w-full lg:w-[70%] bg-[#f4f6fa] rounded-[20px]
         shadow-[0_10px_20px_rgba(0,0,0,0.2)]
@@ -174,34 +190,34 @@ const Dashboard = () => {
 
         {/* Result */}
         {result && (
-  <div
-    className="rounded-[20px] p-5 flex flex-col items-center
+          <div
+            className="rounded-[20px] p-5 flex flex-col items-center
     shadow-[0_10px_20px_rgba(0,0,0,0.2)]
     min-h-75 max-h-105
     bg-white overflow-hidden"
-  >
-    <div className="text-[22px] font-bold mb-2 text-center">
-      Result
-    </div>
+          >
+            <div className="text-[22px] font-bold mb-2 text-center">
+              Result
+            </div>
 
-    <div className="flex items-center gap-3 mb-4">
-      <div className="text-[26px] font-bold">
-        {result.score}%
-      </div>
-      <CreditScoreIcon />
-    </div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="text-[26px] font-bold">
+                {result.score}%
+              </div>
+              <CreditScoreIcon />
+            </div>
 
-    {/* SCROLLABLE CONTENT */}
-    <div className="w-full overflow-y-auto pr-2">
-      <div className="text-[20px] font-bold mb-2">
-        Feedback
-      </div>
-      <div className="text-[15px] leading-relaxed">
-        {result.feedback}
-      </div>
-    </div>
-  </div>
-)}
+            {/* SCROLLABLE CONTENT */}
+            <div className="w-full overflow-y-auto pr-2">
+              <div className="text-[20px] font-bold mb-2">
+                Feedback
+              </div>
+              <div className="text-[15px] leading-relaxed">
+                {result.feedback}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Loading */}
         {loading && (
