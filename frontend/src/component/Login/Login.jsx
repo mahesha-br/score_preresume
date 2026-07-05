@@ -47,7 +47,43 @@ const Login = () => {
       // ✅ Navigate after login
       navigate("/dashboard");
     } catch (error) {
-      alert("Something went wrong");
+      console.error("Login Error:", error);
+      if (error.code === "auth/unauthorized-domain") {
+        alert(
+          "Firebase Auth: This domain is not authorized. " +
+          "Please go to your Firebase Console -> Authentication -> Settings -> Authorized domains and add 'localhost'."
+        );
+      } else {
+        alert("Login failed: " + (error.message || "Something went wrong"));
+      }
+    }
+  };
+
+  const handleMockLogin = async (role) => {
+    try {
+      const userData = {
+        name: role === "admin" ? "Mock Admin" : "Mock User",
+        email: role === "admin" ? "admin@example.com" : "user@example.com",
+        photoUrl: "https://cdn-icons-png.flaticon.com/512/847/847969.png",
+      };
+
+      const response = await API.post("/api/user", userData);
+      const user = response.data.user;
+
+      // Force mock role client-side if database registers it as default 'user'
+      if (role === "admin" && user.role !== "admin") {
+        user.role = "admin";
+      } else if (role === "user" && user.role === "admin") {
+        user.role = "user";
+      }
+
+      setUserInfo(user);
+      localStorage.setItem("userInfo", JSON.stringify(user));
+      setLogin(true);
+      localStorage.setItem("isLogin", "true");
+      navigate("/dashboard");
+    } catch (error) {
+      alert("Mock login failed");
       console.error(error);
     }
   };
@@ -89,6 +125,28 @@ const Login = () => {
           <GoogleIcon className="text-red-500" />
           Sign in with Google
         </div>
+
+        {window.location.hostname === "localhost" && (
+          <div className="mt-6 pt-6 border-t border-gray-800 flex flex-col gap-3">
+            <p className="text-gray-400 text-center text-xs">
+              Local Development Bypasses:
+            </p>
+            <div className="flex gap-3 justify-center">
+              <button
+                onClick={() => handleMockLogin("user")}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-[20px] text-xs font-semibold cursor-pointer transition-colors duration-200"
+              >
+                Mock User
+              </button>
+              <button
+                onClick={() => handleMockLogin("admin")}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-[20px] text-xs font-semibold cursor-pointer transition-colors duration-200"
+              >
+                Mock Admin
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
