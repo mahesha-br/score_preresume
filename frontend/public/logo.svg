@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" style={{background: "linear-gradient(to right, #fca326, #f94a6b)"}} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H3"/><path d="M15 12H3"/><path d="M17 19H3"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+  <defs>
+    <linearGradient id="articleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fca326" />
+      <stop offset="100%" stop-color="#f94a6b" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded background card -->
+  <rect width="24" height="24" rx="5" fill="url(#articleGrad)" />
+  <!-- Article icon path from Material Icons, centered -->
+  <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" fill="#ffffff" />
+</svg>
